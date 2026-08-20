@@ -1,0 +1,31 @@
+# 📊 Executive Summary: Patient Stay & Clinical Outcomes Analysis
+
+## 📌 Context & Scope
+This project analyzes patient admission data from `healthcare_dataset_100rows_Visualization-1.xlsx` to investigate relationships between clinical test results (`Abnormal`, `Inconclusive`, `Normal`), length of hospital stay (days), and overall billing amounts.
+
+---
+
+## 🔍 Key Findings
+
+### 1. Hospital Stay Duration by Test Outcome
+* **Abnormal Test Results**: Require the longest hospitalization, averaging **15.8 days** (median: 16.0 days).
+* **Inconclusive Test Results**: Result in an average stay of **15.3 days** (median: 14.5 days).
+* **Normal Test Results**: Associated with the shortest stays, averaging **14.6 days** (median: 14.0 days).
+* **Variance**: While patients with abnormal results stay approximately **1.2 days longer** on average than those with normal results, stay lengths across all categories range from 1 to 30 days.
+
+### 2. Admission Type Trends
+* **Elective Admissions**: Highest average duration at **16.0 days**.
+* **Urgent Admissions**: Average duration of **15.5 days**.
+* **Emergency Admissions**: Lowest average duration at **14.2 days**.
+
+### 3. Financial & Billing Correlations
+* Average billing amounts remain relatively uniform across test categories (~$24,400 to $25,600).
+* Statistical correlation between length of stay and billing amount is near zero (**-0.031**), indicating standardized fixed-rate or procedure-based pricing structures rather than simple per-day billing rates.
+
+---
+
+## 💡 Conclusions & Next Steps
+
+1. **Clinical Impact**: Patients presenting abnormal test results demand extended observation windows (~1.2 additional days), suggesting increased resource allocation for secondary diagnostics and care management.
+2. **Operational Planning**: Hospital capacity management can anticipate ~15-day average bed occupancy across all diagnostic categories.
+3. **Future Analysis**: Recommend incorporating primary diagnosis/condition codes and age demographics to isolate secondary factors driving extreme stay outliers (up to 30 days).

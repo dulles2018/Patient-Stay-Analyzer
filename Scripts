@@ -1,0 +1,54 @@
+import os
+import pandas as pd
+
+def load_patient_data() -> pd.DataFrame:
+    """Reads patient records from the Excel file in the data directory."""
+    data_path = os.path.join("data", "healthcare_dataset_100rows_Visualization-1.xlsx")
+    
+    if not os.path.exists(data_path):
+        raise FileNotFoundError(f"Dataset missing at '{data_path}'. Please place the file in the data/ folder.")
+        
+    df = pd.read_excel(data_path, sheet_name=0)
+    
+    # Fix messy patient name casing (e.g., 'DaNnY sMitH' -> 'Danny Smith')
+    if "Name" in df.columns:
+        df["Name"] = df["Name"].astype(str).str.title()
+        
+    return df
+
+import pandas as pd
+
+def clean_patient_records(df: pd.DataFrame) -> pd.DataFrame:
+    """Removes empty test results and invalid stay durations."""
+    # Drop rows missing crucial analysis columns
+    cleaned_df = df.dropna(subset=["Test Results", "length_stay"]).copy()
+    
+    # Filter for valid positive stay lengths
+    cleaned_df = cleaned_df[cleaned_df["length_stay"] > 0]
+    
+    return cleaned_df
+
+import os
+import pandas as pd
+import matplotlib.pyplot as plt
+
+def create_stay_duration_chart(df: pd.DataFrame):
+    """Calculates average stay per test result and exports a bar chart image."""
+    summary = df.groupby("Test Results")["length_stay"].mean()
+    
+    # Build chart
+    plt.figure(figsize=(8, 4))
+    summary.plot(kind="bar", color=["#4C72B0", "#DD8452", "#55A868"], edgecolor="black")
+    plt.title("Average Hospital Stay by Test Result")
+    plt.xlabel("Test Result")
+    plt.ylabel("Average Stay (Days)")
+    plt.xticks(rotation=0)
+    plt.tight_layout()
+    
+    # Save output image
+    os.makedirs("graphs", exist_ok=True)
+    chart_path = os.path.join("graphs", "avg_stay_by_test_result.png")
+    plt.savefig(chart_path)
+    plt.close()
+    
+    return summary, chart_path
